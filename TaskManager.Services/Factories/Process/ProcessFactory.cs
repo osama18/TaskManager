@@ -1,4 +1,5 @@
 ﻿using System;
+using TaskManager.Models.Process;
 using TaskManager.Services.Models;
 using TaskManager.Services.Models.Process;
 using TaskManager.Services.Models.Process.DecoratedProcesses;
@@ -7,7 +8,7 @@ namespace TaskManager.Services.Factories.Process
 {
     internal class ProcessFactory : IProcessFactory
     {
-        public IComparableProcess Construct(IProcess process, SortOption sortOption)
+        public IComparableProcess Construct(ProcessDto process, SortOption sortOption)
         {
             switch (sortOption)
             {
@@ -23,7 +24,7 @@ namespace TaskManager.Services.Factories.Process
 
         public IProcess Construct(Priority priority, string groupName)
         {
-            return new ConcreteProcess(priority, groupName);
+            return new ConcreteProcess(0,priority, groupName, DateTime.UtcNow);
         }
     }
 }

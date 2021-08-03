@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Models.Process;
 using TaskManager.Services.Factories;
 using TaskManager.Services.Factories.Memory;
 using TaskManager.Services.Factories.Process;
@@ -33,7 +34,7 @@ namespace TaskManager.Services.Services
             return await memory.AddAsync(process);
         }
 
-        public async Task<ICollection<IProcess>> ListAsync(SortOption sortOption)
+        public async Task<IEnumerable<ProcessDto>> ListAsync(SortOption sortOption)
         {
             var processs = (await memory.ListAsync())
                 .Select(s => processFactory.Construct(s, sortOption))
@@ -41,7 +42,7 @@ namespace TaskManager.Services.Services
 
             var result = sortingAlgorithm.Sort(processs);
 
-            return result;
+            return result.Select(s => s.Process);
         }
 
         public async Task KillIProcessAsync(long processId)
@@ -58,5 +59,6 @@ namespace TaskManager.Services.Services
         {
             await memory.KillAllAsync();
         }
+
     }
 }

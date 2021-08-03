@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaskManager.Models.Process;
 using TaskManager.Services.Models;
 using TaskManager.Services.Models.Process;
 using TaskManager.Services.Services;
@@ -36,11 +37,11 @@ namespace TaskManagers.Web.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
         [Route("all")]
-        public async Task<ActionResult<IEnumerable<IProcess>>> Get([FromQuery] SortOption sortOption = SortOption.ById)
+        public async Task<ActionResult<IEnumerable<ProcessDto>>> Get([FromQuery] SortOption sortOption = SortOption.ById)
         {
             try
             {
-                IEnumerable<IProcess> result = await taskManagerServices.ListAsync(sortOption);
+                var result = await taskManagerServices.ListAsync(sortOption);
                 return Ok(result);
             }
             catch (Exception ex)
