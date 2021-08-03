@@ -7,7 +7,7 @@ namespace TaskManager.Services.Factories.Process
     internal interface IProcessFactory
     {
         IComparableProcess Construct(IProcess process, SortOption sortOption);
-        IProcess Construct(long pID, Priority priority, string groupName);
+        IProcess Construct(Priority priority, string groupName);
 
     }
 }

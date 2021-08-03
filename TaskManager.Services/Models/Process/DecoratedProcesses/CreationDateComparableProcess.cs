@@ -5,7 +5,7 @@ namespace TaskManager.Services.Models.Process.DecoratedProcesses
     public class CreationDateComparableProcess : ConcreteProcess, IComparableProcess
     {
         private readonly IProcess process;
-        public CreationDateComparableProcess(IProcess process) : base(process.PID,process.Priority, process.GroupName)
+        public CreationDateComparableProcess(IProcess process) : base(process.Priority, process.GroupName)
         {
             this.process = process;
         }

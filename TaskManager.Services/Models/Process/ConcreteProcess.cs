@@ -7,9 +7,9 @@ namespace TaskManager.Services.Models.Process
         private readonly Priority priority;
         private readonly DateTime createdAt;
         private string groupName { get; set; }
-        public ConcreteProcess(long pID, Priority priority , string groupName)
+        public ConcreteProcess(Priority priority , string groupName)
         {
-            this.pID = pID;
+            this.pID = 0;
             this.priority = priority;
             this.groupName = groupName;
             this.createdAt = DateTime.UtcNow;

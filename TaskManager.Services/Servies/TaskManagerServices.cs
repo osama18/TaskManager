@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using TaskManager.Services.Factories.Process;
+using TaskManager.Services.Models;
 using TaskManager.Services.Models.Process;
-using TaskManager.Services.Services;
 
-namespace TaskManager.Services.Models
+namespace TaskManager.Services.Services
 {
-    internal class TaskManager: ITaskManager
+    internal class TaskManagerServices: ITaskManagerServices
     {
         private readonly IMemory memory;
         private readonly ISortingAlgorithm sortingAlgorithm;
         private readonly IProcessFactory processFactory;
         
-        public TaskManager(IMemory memory,
+        public TaskManagerServices(IMemory memory,
             ISortingAlgorithm sortingAlgorithm,
             IProcessFactory processFactory)
         {
@@ -23,12 +24,13 @@ namespace TaskManager.Services.Models
             this.processFactory = processFactory;
         }
 
-        public bool Add(IProcess process)
+        public async Task<bool> AddAsync(Priority priority, string groupName)
         {
+            var process = processFactory.Construct(priority, groupName);
             return memory.Add(process);
         }
 
-        public IProcess[] List(SortOption sortOption)
+        public async Task<ICollection<IProcess>> ListAsync(SortOption sortOption)
         {
             var processs = memory
                 .List()
@@ -39,17 +41,18 @@ namespace TaskManager.Services.Models
             return result;
         }
 
-        public void KillIProcess(IProcess process)
+        public async Task KillIProcessAsync(long processId)
         {
+            IProcess process = memory.Get(processId);
             memory.KillIProcess(process);
         }
 
-        public void KillIProcessGroup(string groupName)
+        public async Task KillIProcessGroupAsync(string groupName)
         {
             memory.KillIProcessGroup(groupName);
         }
 
-        public void KillAll()
+        public async Task KillAllAsync()
         {
             memory.KillAll();
         }

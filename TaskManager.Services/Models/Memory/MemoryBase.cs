@@ -41,6 +41,10 @@ namespace TaskManager.Services.Models
             return OnCompleteAdd(process);
         }
 
+        public IProcess Get(long processId)
+        {
+            throw new System.NotImplementedException();
+        }
         protected abstract bool OnCompleteAdd(IProcess process);
     }
 }

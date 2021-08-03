@@ -10,5 +10,6 @@ namespace TaskManager.Services.Models
         void KillIProcess(IProcess process);
         void KillIProcessGroup(string groupName);
         void KillAll();
+        IProcess Get(long processId);
     }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TaskManager.Web</name>
+    </assembly>
+    <members>
+        <member name="M:TaskManagers.Web.Controllers.TaskManagerController.Get(TaskManager.Services.Models.SortOption)">
+            <summary>
+             Retrieve a TaskManager Processes
+            </summary>
+            <param name="sortOption"> The sort option of returned processes</param>
+            <returns>List of task manager Processes</returns>
+            <response code="200">Success: processes returned</response>
+            <response code="500">Internal server error: the server was unable to process the request, due to a server error.</response>       
+        </member>
+    </members>
+</doc>

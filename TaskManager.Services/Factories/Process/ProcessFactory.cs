@@ -21,9 +21,9 @@ namespace TaskManager.Services.Factories.Process
             throw new NotImplementedException();
         }
 
-        public IProcess Construct(long pID, Priority priority, string groupName)
+        public IProcess Construct(Priority priority, string groupName)
         {
-            return new ConcreteProcess(pID, priority, groupName);
+            return new ConcreteProcess(priority, groupName);
         }
     }
 }

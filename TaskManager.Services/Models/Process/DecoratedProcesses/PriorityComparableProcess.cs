@@ -5,7 +5,7 @@ namespace TaskManager.Services.Models.Process.DecoratedProcesses
     public class PriorityComparableProcess : ConcreteProcess, IComparableProcess
     {
         private readonly IProcess process;
-        public PriorityComparableProcess(IProcess process) : base(process.PID,process.Priority, process.GroupName)
+        public PriorityComparableProcess(IProcess process) : base(process.Priority, process.GroupName)
         {
             this.process = process;
         }
