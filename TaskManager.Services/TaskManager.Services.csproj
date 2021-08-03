@@ -6,7 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TaskManager.Common\TaskManager.Common.csproj" />
+    <ProjectReference Include="..\TaskManagers.DAL\TaskManager.DAL.csproj" />
   </ItemGroup>
 
 </Project>

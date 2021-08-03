@@ -8,7 +8,7 @@ namespace TaskManager.Services.Services
 {
     public interface ITaskManagerServices
     {
-        Task<bool> AddAsync(Priority priority, string groupName);
+        Task<long?> AddAsync(Priority priority, string groupName);
         Task<ICollection<IProcess>> ListAsync(SortOption sortOption);
         Task KillIProcessAsync(long processId);
         Task KillIProcessGroupAsync(string groupName);

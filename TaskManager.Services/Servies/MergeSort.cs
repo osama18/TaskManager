@@ -1,7 +1,7 @@
 ﻿using System;
 using TaskManager.Services.Services;
 
-namespace TaskManager.Services.Servies
+namespace TaskManager.Services
 {
     internal class MergeSort : ISortingAlgorithm 
     {

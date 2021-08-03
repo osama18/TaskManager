@@ -1,40 +1,28 @@
 ﻿
+using AutoMapper;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TaskManager.Services.Models.Process;
 using TaskManager.Services.Models.Process.DecoratedProcesses;
+using TaskManagers.DAL.Repostiories;
 
 namespace TaskManager.Services.Models.Memory
 {
     internal class PriorityQueueMemory : MemoryBase, IMemory
     {
-        public PriorityQueueMemory(long capacity) : base(capacity)
+        private readonly IProcessRepository processRepository;
+        public PriorityQueueMemory(IProcessRepository processRepository,
+            IMapper mapper,
+            long capacity) : base(processRepository, mapper, capacity)
         {
-            processList = new List<IProcess>();
+            this.processRepository = processRepository;
         }
 
-        protected override bool OnCompleteAdd(IProcess process)
+        protected override async Task<long?> OnCompleteAdd(IProcess process)
         {
-            IProcess min = GetMin();
-            processList.Remove(min);
-            processList.Add(process);
-            return true;
-        }
-        public void KillAll()
-        {
-            processList = new List<IProcess>();
+            await processRepository.RemoveOldestLowestPriority();
+            return await AddAsync(process);
         }
 
-        private IProcess GetMin()
-        {
-            var enumerator = processList.GetEnumerator();
-            IProcess min = new PriorityDateComparableProcess(enumerator.Current);
-            while (enumerator.MoveNext())
-            {
-                var current = new PriorityDateComparableProcess(enumerator.Current);
-                if (current.CompareTo(min) == -1)
-                    min = current;
-            }
-            return min;
-        }
     }
 }

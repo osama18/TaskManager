@@ -1,26 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TaskManager.Services.Models.Process;
+using TaskManagers.DAL.Repostiories;
 
 namespace TaskManager.Services.Models.Memory
 {
     internal class QueueMemory : MemoryBase, IMemory
     {
-        public QueueMemory(long capacity) : base(capacity)
+        private readonly IProcessRepository processRepository;
+        public QueueMemory(IProcessRepository processRepository,
+            IMapper mapper,
+            long capacity) : base(processRepository, mapper, capacity)
         {
-            processList = new List<IProcess>();
+            this.processRepository = processRepository;
         }
 
-        public void KillAll()
+        protected override async Task<long?> OnCompleteAdd(IProcess process)
         {
-            processList = new List<IProcess>();
-        }
-
-        protected override bool OnCompleteAdd(IProcess process)
-        {
-            var enumerator = processList.GetEnumerator();
-            processList.Remove(enumerator.Current);
-            processList.Add(process);
-            return true;
+            await processRepository.RemoveOldest();
+            return await AddAsync(process);
         }
     }
 }

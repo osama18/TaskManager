@@ -1,22 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TaskManager.Services.Models.Process;
+using TaskManagers.DAL.Repostiories;
 
 namespace TaskManager.Services.Models.Memory
 {
     internal class HeapMemory : MemoryBase, IMemory
     {
-        public HeapMemory(long capacity): base(capacity)
+        private readonly IProcessRepository processRepository;
+        public HeapMemory(IProcessRepository processRepository,
+            IMapper mapper,
+            long capacity): base(processRepository, mapper,capacity)
         {
-            processList = new List<IProcess>();
-        }
-        public void KillAll()
-        {
-            processList = new List<IProcess>();
+            this.processRepository = processRepository;
         }
 
-        protected override bool OnCompleteAdd(IProcess process)
+        protected override Task<long?> OnCompleteAdd(IProcess process)
         {
-            return false;
+            return null;
         }
+
     }
 }

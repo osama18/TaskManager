@@ -5,7 +5,7 @@ using TaskManager.Services.Models.Process.DecoratedProcesses;
 
 namespace TaskManager.Services.Factories.Process
 {
-    public class ProcessFactory : IProcessFactory
+    internal class ProcessFactory : IProcessFactory
     {
         public IComparableProcess Construct(IProcess process, SortOption sortOption)
         {

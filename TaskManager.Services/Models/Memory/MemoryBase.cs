@@ -1,50 +1,69 @@
 ﻿
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TaskManager.Services.Models.Process;
+using TaskManagers.DAL.Entities;
+using TaskManagers.DAL.Repostiories;
 
 namespace TaskManager.Services.Models
 {
     public abstract class MemoryBase
     {
-        protected ICollection<IProcess> processList;
+        private readonly IProcessRepository processRepository;
+        private readonly IMapper mapper;
         private readonly long capacity;
-
-        public MemoryBase(long capacity)
+        
+        public MemoryBase(IProcessRepository processRepository,
+            IMapper mapper,
+            long capacity)
         {
+            this.processRepository = processRepository;
+            this.mapper = mapper;
             this.capacity = capacity;
         }
 
-        public ICollection<IProcess> List()
+        public async Task<IEnumerable<IProcess>> ListAsync(int take = 1000, int skip =0)
         {
-            return processList;
+            var list =  await processRepository.RetrievePage(take,skip);
+            var result = list.Select(mapper.Map<IProcess>);
+            return result;
         }
-        public void KillIProcess(IProcess process)
+        public async Task KillIProcessAsync(long processId)
         {
-            process.Kill();
-            processList.Remove(process);
-        }
-
-        public void KillIProcessGroup(string groupName)
-        {
-            processList = processList.Where(s => s.GroupName != groupName).ToList();
+            await processRepository.Remove(processId);
         }
 
-        public bool Add(IProcess process)
+        public async Task KillIProcessGroupAsync(string groupName)
         {
-            if (processList.Count <= capacity)
+            await processRepository.Remove(groupName);
+        }
+
+        public async Task<long?> AddAsync(IProcess process)
+        {
+            var currentCount = await processRepository.Count();
+            if (currentCount <= capacity)
             {
-                processList.Add(process);
-                return true;
+                var processEntity = mapper.Map<ProcessEntity>(process);
+                var id = await processRepository.InsertAsync(processEntity);
+                return id;
             }
 
-            return OnCompleteAdd(process);
+            return await OnCompleteAdd(process);
         }
 
-        public IProcess Get(long processId)
+        public async Task<IProcess> RetrieveAsync(long processId)
         {
-            throw new System.NotImplementedException();
+            var processEntity = await processRepository.RetrieveById(processId);
+            var result = mapper.Map<IProcess>(processEntity);
+            return result;
         }
-        protected abstract bool OnCompleteAdd(IProcess process);
+        public async Task KillAllAsync()
+        {
+            await processRepository.RemoveAll();
+        }
+
+        protected abstract Task<long?> OnCompleteAdd(IProcess process);
     }
 }

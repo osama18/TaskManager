@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TaskManager.Services.Models.Process;
 
 namespace TaskManager.Services.Models
 {
     public interface IMemory
     {
-        bool Add(IProcess process);
-        ICollection<IProcess> List();
-        void KillIProcess(IProcess process);
-        void KillIProcessGroup(string groupName);
-        void KillAll();
-        IProcess Get(long processId);
+        Task<long?> AddAsync(IProcess process);
+        Task<IEnumerable<IProcess>> ListAsync(int take = 1000, int skip = 0);
+        Task KillIProcessAsync(long processId);
+        Task KillIProcessGroupAsync(string groupName);
+        Task KillAllAsync();
+        Task<IProcess> RetrieveAsync(long processId);
     }
 }
