@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using TaskManager.Services;
+using TaskManagers.Common;
 
 namespace TaskManagers.Web
 {
@@ -35,9 +36,10 @@ namespace TaskManagers.Web
         public void ConfigureServices(IServiceCollection services)
         {
             var configuration = new ConfigurationBuilder()
-          .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
+                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
             services.AddSingleton<IConfigurationRoot>(configuration);
 
+            services.RegisterCommon();
             services.AddControllers();
             services.RegisterBusiness();
 

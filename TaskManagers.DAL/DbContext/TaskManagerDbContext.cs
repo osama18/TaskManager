@@ -53,8 +53,17 @@ namespace TaskManagers.DAL.DbContext
 
         public void Update(Entity entity) => base.Update(entity);
 
-        public async Task<long?> AddAsync(Entity entity) => (await base.AddAsync(entity))?.Entity?.Id;
+        public async Task<Entity> AddAsync(Entity entity)
+        {
+            var result = await base.AddAsync(entity);
+            await SaveChangesAsync();
+            return result?.Entity;
+        }
 
-        public async Task AddRangeAsync(IEnumerable<Entity> entities) => await base.AddRangeAsync(entities);
+        public async Task AddRangeAsync(IEnumerable<Entity> entities)
+        {
+            await base.AddRangeAsync(entities);
+            await SaveChangesAsync();
+        }
     }
 }

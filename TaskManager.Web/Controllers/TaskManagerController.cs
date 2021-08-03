@@ -36,11 +36,11 @@ namespace TaskManagers.Web.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
         [Route("all")]
-        public async Task<ActionResult<ICollection<IProcess>>> Get([FromQuery] SortOption sortOption = SortOption.ById)
+        public async Task<ActionResult<IEnumerable<IProcess>>> Get([FromQuery] SortOption sortOption = SortOption.ById)
         {
             try
             {
-                var result = await taskManagerServices.ListAsync(sortOption);
+                IEnumerable<IProcess> result = await taskManagerServices.ListAsync(sortOption);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -63,7 +63,10 @@ namespace TaskManagers.Web.Controllers
                 }
 
                 var result = await taskManagerServices.AddAsync(request.Priority, request.GroupName);
-
+                if (result == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
                 return Created("", result);
             }
             catch (Exception ex)
@@ -75,7 +78,7 @@ namespace TaskManagers.Web.Controllers
         }
 
         [HttpDelete]
-        [Route("kill/{processid}")]
+        [Route("killprocess/{processid}")]
         public async Task<ActionResult> KillProcess([FromRoute] long processid)
         {
             try
@@ -111,7 +114,7 @@ namespace TaskManagers.Web.Controllers
         }
 
         [HttpDelete]
-        [Route("kill/{groupname}")]
+        [Route("killprocessgroup/{groupname}")]
         public async Task<ActionResult> KillProcessGroup([FromRoute] string groupname)
         {
             try

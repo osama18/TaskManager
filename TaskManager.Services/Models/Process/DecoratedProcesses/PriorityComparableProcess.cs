@@ -4,10 +4,8 @@ namespace TaskManager.Services.Models.Process.DecoratedProcesses
 {
     public class PriorityComparableProcess : ConcreteProcess, IComparableProcess
     {
-        private readonly IProcess process;
-        public PriorityComparableProcess(IProcess process) : base(process.Priority, process.GroupName)
+        public PriorityComparableProcess(IProcess process) : base(process)
         {
-            this.process = process;
         }
 
         public int CompareTo([AllowNull] IProcess other)

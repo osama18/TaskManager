@@ -11,6 +11,6 @@ namespace TaskManager.Services
         public const string QueueMemoryType = "QueueMemoryType";
         public const string HeapMemoryType = "HeapMemoryType";
 
-        public const long MemoryCapacity = 1000;
+        public const long MemoryCapacity = 5;
     }
 }

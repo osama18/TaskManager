@@ -27,7 +27,7 @@ namespace TaskManager.Services.Models
         public async Task<IEnumerable<IProcess>> ListAsync(int take = 1000, int skip =0)
         {
             var list =  await processRepository.RetrievePage(take,skip);
-            var result = list.Select(mapper.Map<IProcess>);
+            var result = list.Select(mapper.Map<ConcreteProcess>);
             return result;
         }
         public async Task KillIProcessAsync(long processId)
@@ -53,10 +53,10 @@ namespace TaskManager.Services.Models
             return await OnCompleteAdd(process);
         }
 
-        public async Task<IProcess> RetrieveAsync(long processId)
+        public async Task<ConcreteProcess> RetrieveAsync(long processId)
         {
             var processEntity = await processRepository.RetrieveById(processId);
-            var result = mapper.Map<IProcess>(processEntity);
+            var result = mapper.Map<ConcreteProcess>(processEntity);
             return result;
         }
         public async Task KillAllAsync()

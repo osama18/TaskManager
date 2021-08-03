@@ -4,10 +4,8 @@ namespace TaskManager.Services.Models.Process.DecoratedProcesses
 {
     public class CreationDateComparableProcess : ConcreteProcess, IComparableProcess
     {
-        private readonly IProcess process;
-        public CreationDateComparableProcess(IProcess process) : base(process.Priority, process.GroupName)
+        public CreationDateComparableProcess(IProcess process) : base(process)
         {
-            this.process = process;
         }
 
         public int CompareTo([AllowNull] IProcess other)

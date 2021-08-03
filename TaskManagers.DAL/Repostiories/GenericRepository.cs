@@ -18,8 +18,9 @@ namespace TaskManagers.DAL.Repostiories
 
         public async Task<long?> InsertAsync(T entity)
         {
-            var id = await taskManagersDbContext.AddAsync(entity);
-            return id;
+            var result = await taskManagersDbContext.AddAsync(entity);
+
+            return result?.Id;
         }
 
         public async Task InsertRangeAsync(IEnumerable<T> entities)

@@ -7,12 +7,20 @@ namespace TaskManager.Services.Models.Process
         private readonly Priority priority;
         private readonly DateTime createdAt;
         private string groupName { get; set; }
-        public ConcreteProcess(Priority priority , string groupName)
+        public ConcreteProcess(IProcess process)
         {
-            this.pID = 0;
+            this.pID       = process.PID;
+            this.priority  = process.Priority;
+            this.groupName = process.GroupName;
+            this.createdAt = process.CreatedAt;
+        }
+       
+        public ConcreteProcess(long pID,Priority priority , string groupName, DateTime createdAt)
+        {
+            this.pID = pID;
             this.priority = priority;
             this.groupName = groupName;
-            this.createdAt = DateTime.UtcNow;
+            this.createdAt = createdAt;
         }
 
         public long PID { get { return pID; } }
@@ -22,12 +30,8 @@ namespace TaskManager.Services.Models.Process
 
         public void Kill()
         {
-            Dispose();
+            
         }
 
-        public void Dispose()
-        {
-            this.Dispose();
-        }
     }
 }

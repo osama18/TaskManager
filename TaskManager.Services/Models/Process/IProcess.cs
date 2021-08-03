@@ -2,7 +2,7 @@
 
 namespace TaskManager.Services.Models.Process
 {
-    public interface IProcess : IDisposable
+    public interface IProcess 
     {
        long PID { get; }
        Priority Priority { get; }

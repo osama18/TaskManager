@@ -29,7 +29,7 @@ namespace TaskManagers.DAL.DbContext
         /// <returns></returns>
         Task<int> SaveChangesAsync();
 
-        Task<long?> AddAsync(Entity entity);
+        Task<Entity> AddAsync(Entity entity);
 
         Task AddRangeAsync(IEnumerable<Entity> entities);
 
