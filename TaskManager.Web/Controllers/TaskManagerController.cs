@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Models.Process;
 using TaskManager.Services.Models;
-using TaskManager.Services.Models.Process;
 using TaskManager.Services.Services;
 using TaskManagers.Common.Logging;
 using TaskManagers.Web.Models;
@@ -32,7 +31,7 @@ namespace TaskManagers.Web.Controllers
         /// <returns>List of task manager Processes</returns>
         /// <response code="200">Success: processes returned</response>
         /// <response code="500">Internal server error: the server was unable to process the request, due to a server error.</response>       
-        //   [SwaggerResponseExample(200, typeof(TaskManagerExamples))]
+        //[SwaggerResponseExample(200, typeof(TaskManagerExamples))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
@@ -66,7 +65,7 @@ namespace TaskManagers.Web.Controllers
                 var result = await taskManagerServices.AddAsync(request.Priority, request.GroupName);
                 if (result == null)
                 {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
+                    return BadRequest("Failed to add more items");
                 }
                 return Created("", result);
             }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Models.Process;
-using TaskManager.Services.Factories;
 using TaskManager.Services.Factories.Memory;
 using TaskManager.Services.Factories.Process;
 using TaskManager.Services.Factories.SortingAlgorithm;
