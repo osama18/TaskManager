@@ -8,7 +8,7 @@ To un:
 
 3-in Package console manager choose TaskManager.Dal from the drop down
 
-4- Run the command $end:TaskManagersConnectionString  = "{your connection string}"
+4- Run the command $env:TaskManagersConnectionString  = "{your connection string}"
 
 5-Run the command : update-database
 
