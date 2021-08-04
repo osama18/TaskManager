@@ -19,6 +19,7 @@ To un:
 **************************************************************************************************************
 
 About the patterns in the project:
+
 1-Used startegy pattern to make the sorting algorithms interchangable when we add more
 
 2-Used the decorator pattern to extend the proceess dto behaviour in run time 
