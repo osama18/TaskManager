@@ -22,7 +22,7 @@ About the patterns in the project:
 
 1-Used startegy pattern to make the sorting algorithms interchangable when we add more
 
-2-Used the decorator pattern to extend the proceess dto behaviour in run time 
+2-Used the decorator pattern to extend the ProceessDto model behaviour in run time by adding the proper compareto behaviour
 
 3-Used template pattern to gather the common behaviours between the different vendor for memory managment and delegated what is varying to the sub classes
 
